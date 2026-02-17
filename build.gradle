@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.mastermide.testing.autotesting'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+
+    testImplementation (
+        "org.junit.jupiter:junit-jupiter:5.14.3",
+        'com.codeborne:selenide:7.14.0',
+        'org.slf4j:slf4j-simple:2.0.15'
+    )
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
