@@ -86,6 +86,7 @@ jobs:
         if: always()
         uses: simple-elf/allure-report-action@master
         with:
+
           gh_pages: gh-pages
           allure_results: build/allure-results
           allure_report: allure-report
