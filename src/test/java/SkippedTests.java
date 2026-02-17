@@ -19,4 +19,10 @@ public class SkippedTests {
         assertTrue(true);
     }
 
+    @Disabled("Some reason")
+    @Test
+    void test3(){
+        assertTrue(true);
+    }
+
 }
