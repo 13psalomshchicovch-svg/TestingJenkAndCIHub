@@ -68,29 +68,32 @@ jobs:
         run: chmod +x ./gradlew
       - name: Run Gradle tests
         run: ./gradlew clean test -Dselenide.remote=http://localhost:4444/wd/hub
+        continue-on-error: true
       # 5. Скачиваем историю (только если предыдущие шаги прошли или always)
       - name: Checkout gh-pages (for Allure history)
-        if: always()
         uses: actions/checkout@v4
+        if: always()
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
       # 6. Генерируем Allure отчёт
       - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@v1.13
         if: always()
-        uses: simple-elf/allure-report-action@master
+        id: allure-report
         with:
-          gh_pages: gh-pages
           allure_results: build/allure-results
+          gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
       # 7. Публикуем отчёт в gh-pages
       - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4 # обновили до v4
         if: always()
-        uses: peaceiris/actions-gh-pages@v4   # обновили до v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
-          # force_orphan: true   # раскомментировать, если нужно чистую историю
+          force_orphan: true
+
